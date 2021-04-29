@@ -5,3 +5,15 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+#
+category = Category.create(name: 'category-1')
+category.products.create([{ name: 'Product-1' }, { name: 'Product-2'}])
+puts Product.all
+Product.all.each do |p|
+  id = p.id
+  Price.create(value: id * 100, product_id: id)
+  2.times do |i|
+    Image.create(url: "picture-#{id}#{i}.jpg", product_id: id)
+  end
+end
+
