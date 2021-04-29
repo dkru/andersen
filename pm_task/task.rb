@@ -19,6 +19,7 @@ class Api::CategoriesController < ApplicationController
   def show
     category_id = params[:id]
     # Paste your code here
+    category = Category.find(category_id)
     render json: { category: {
                      name: category.name,
                      products: category.products.map { |p| { 
