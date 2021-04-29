@@ -19,8 +19,44 @@ class Api::CategoriesController < ApplicationController
   def show
     category_id = params[:id]
     # Paste your code here
+    render json: { category: {
+                     name: category.name,
+                     products: category.products.map { |p| { 
+                       name: p.name,
+                       price: { value: p.price.value },
+                       images: p.images.map { |i| { id: i.id } }
+                     }}
+                   }
+                 }
   end
 end
+
+# after refactoring
+#
+# class CategoriesController < ActionController::API
+#   def show
+#     category_id = params[:id]
+#     # Paste your code here
+#     category = Category.find(category_id)
+#     render json: { category:
+#                    {
+#                      name: category.name,
+#                      products: products_serialize(category)
+#                    } }
+#   end
+# 
+#   private
+# 
+#   def products_serialize(category)
+#     category.products.map do |product|
+#       {
+#         name: product.name,
+#         price: { value: product.price.value },
+#         images: product.images.map { |i| { id: i.id } }
+#       }
+#     end
+#   end
+# end
 
 class Category < ApplicationRecord
   has_many :products
